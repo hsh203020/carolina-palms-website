@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carolina Palms - CEO Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='4' fill='%230D1B2A' stroke='%23D4A017' stroke-width='3'/><text x='20' y='28' text-anchor='middle' fill='%23D4A017' font-size='18' font-weight='bold' font-family='Georgia'>CP</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0D1B2A;color:#F1F5F9;min-height:100vh}
+.hdr{padding:16px 24px;border-bottom:1px solid #D4A017;display:flex;justify-content:space-between;align-items:center}
+.logo{width:40px;height:40px;border:2px solid #D4A017;display:flex;align-items:center;justify-content:center;color:#D4A017;font-weight:bold;font-size:14px}
+.tabs{padding:16px 24px;display:flex;gap:8px;flex-wrap:wrap}
+.tab{padding:8px 20px;border-radius:8px;border:none;cursor:pointer;font-size:14px;background:#1E293B;color:#94A3B8;transition:all .2s}
+.tab:hover{background:#2D3B4E}
+.tab.active{background:#D4A017;color:#0D1B2A;font-weight:bold}
+.content{padding:0 24px 24px;max-width:1400px;margin:0 auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:#111827;border:1px solid #1E293B;border-radius:12px;padding:20px}
+.stat .icon{font-size:24px;margin-bottom:8px}
+.stat .lbl{font-size:11px;color:#64748B;margin-bottom:4px}
+.stat .val{font-size:20px;font-weight:bold}
+.stat .sub{font-size:11px;color:#94A3B8;margin-top:4px}
+.grid2{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.grid11{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:#111827;border:1px solid #1E293B;border-radius:12px;padding:20px}
+.card h3{color:#D4A017;margin-bottom:16px;font-size:16px}
+.bar-chart{display:flex;align-items:flex-end;gap:12px;height:220px;padding-top:10px}
+.bar-group{display:flex;flex-direction:column;align-items:center;flex:1}
+.bar-pair{display:flex;gap:4px;align-items:flex-end;height:180px}
+.bar{width:24px;border-radius:4px 4px 0 0;transition:height .5s}
+.bar-label{font-size:11px;color:#64748B;margin-top:8px}
+.pipeline-item{margin-bottom:12px}
+.pipeline-item .row{display:flex;justify-content:space-between;margin-bottom:4px}
+.pipeline-item .name{font-size:13px;color:#94A3B8}
+.pipeline-item .num{font-size:13px;font-weight:bold}
+.pipeline-item .track{height:8px;background:#1E293B;border-radius:4px}
+.pipeline-item .fill{height:100%;border-radius:4px;transition:width .5s}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px}
+.agent{background:#0D1B2A;border:1px solid #1E293B;border-radius:8px;padding:12px;display:flex;justify-content:space-between;align-items:center}
+.legend{display:flex;gap:16px;margin-bottom:12px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#94A3B8}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+.hidden{display:none}
+.back{color:#94A3B8;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:4px}
+.back:hover{color:#D4A017}
+@media(max-width:768px){.grid2,.grid11{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:16px">
+    <a href="/" class="logo" style="text-decoration:none">CP</a>
+    <div>
+      <h1 style="font-size:20px;font-weight:bold;color:#D4A017">CEO Dashboard</h1>
+      <p style="font-size:12px;color:#64748B"><a href="/" class="back">← Back</a> · Carolina Palms · Real-Time Command Center</p>
+    </div>
+  </div>
+  <div style="text-align:right">
+    <div id="clock" style="font-size:14px;color:#D4A017;font-family:monospace"></div>
+    <div style="font-size:11px;color:#64748B">Live · Auto-refresh 30s</div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab active" data-tab="overview">Overview</button>
+  <button class="tab" data-tab="sales">Sales</button>
+  <button class="tab" data-tab="agents">Agents</button>
+  <button class="tab" data-tab="marketing">Marketing</button>
+</div>
+<div class="content">
+  <div class="stats" id="stats-row"></div>
+  <div id="tab-overview"></div>
+  <div id="tab-sales" class="hidden"></div>
+  <div id="tab-agents" class="hidden"></div>
+  <div id="tab-marketing" class="hidden"></div>
+</div>
+<script>
+setInterval(function(){document.getElementById('clock').textContent=new Date().toLocaleTimeString();},1000);
+document.getElementById('clock').textContent=new Date().toLocaleTimeString();
+
+var stats=[
+  {label:'Total Revenue',value:'SAR 163.9M',sub:'Target',icon:'💰',color:'#10B981'},
+  {label:'Units Sold',value:'12 / 79',sub:'15.2%',icon:'🏠',color:'#D4A017'},
+  {label:'Active Leads',value:'103',sub:'+18% this week',icon:'👥',color:'#3B82F6'},
+  {label:'AI Agents',value:'16 / 16',sub:'All Online',icon:'🤖',color:'#8B5CF6'},
+  {label:'Conversion',value:'11.7%',sub:'+2.3% vs last mo',icon:'📈',color:'#F59E0B'},
+  {label:'Avg Response',value:'1.8s',sub:'AI Concierge',icon:'⚡',color:'#06B6D4'}
+];
+var sr=document.getElementById('stats-row');
+stats.forEach(function(s){sr.innerHTML+='<div class="stat"><div class="icon">'+s.icon+'</div><div class="lbl">'+s.label+'</div><div class="val" style="color:'+s.color+'">'+s.value+'</div><div class="sub">'+s.sub+'</div></div>';});
+
+var tabBtns=document.querySelectorAll('.tab');
+tabBtns.forEach(function(btn){btn.addEventListener('click',function(){tabBtns.forEach(function(b){b.classList.remove('active');});btn.classList.add('active');['overview','sales','agents','marketing'].forEach(function(t){document.getElementById('tab-'+t).classList.add('hidden');});document.getElementById('tab-'+btn.dataset.tab).classList.remove('hidden');});});
+
+var salesData=[{m:'Jan',a:2,r:4},{m:'Feb',a:3,r:5},{m:'Mar',a:4,r:6},{m:'Apr',a:3,r:8},{m:'May',a:5,r:7},{m:'Jun',a:4,r:9}];
+var maxVal=10;
+var overviewHTML='<div class="grid2"><div class="card"><h3>Monthly Sales Performance</h3><div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#D4A017"></div>Ashley</div><div class="legend-item"><div class="legend-dot" style="background:#3B82F6"></div>Rivertowne</div></div><div class="bar-chart">';
+salesData.forEach(function(d){var ah=d.a/maxVal*180,rh=d.r/maxVal*180;overviewHTML+='<div class="bar-group"><div class="bar-pair"><div class="bar" style="height:'+ah+'px;background:#D4A017" title="Ashley: '+d.a+'"></div><div class="bar" style="height:'+rh+'px;background:#3B82F6" title="Rivertowne: '+d.r+'"></div></div><div class="bar-label">'+d.m+'</div></div>';});
+overviewHTML+='</div></div>';
+var pieData=[{n:'Available',v:52,c:'#10B981'},{n:'Reserved',v:15,c:'#F59E0B'},{n:'Sold',v:12,c:'#D4A017'}];
+var total=79,startAngle=0;
+overviewHTML+='<div class="card"><h3>Unit Inventory (79 Total)</h3><div style="display:flex;justify-content:center;padding:20px"><svg width="220" height="220" viewBox="-110 -110 220 220">';
+pieData.forEach(function(d){var angle=d.v/total*360;var endAngle=startAngle+angle;var sr2=startAngle*Math.PI/180,er=endAngle*Math.PI/180;var x1=90*Math.cos(sr2),y1=90*Math.sin(sr2);var x2=90*Math.cos(er),y2=90*Math.sin(er);var large=angle>180?1:0;overviewHTML+='<path d="M0,0 L'+x1+','+y1+' A90,90 0 '+large+',1 '+x2+','+y2+' Z" fill="'+d.c+'" stroke="#0D1B2A" stroke-width="2"/>';var mid=(startAngle+angle/2)*Math.PI/180;var tx=55*Math.cos(mid),ty=55*Math.sin(mid);overviewHTML+='<text x="'+tx+'" y="'+ty+'" fill="white" font-size="11" text-anchor="middle" dominant-baseline="middle">'+d.v+'</text>';startAngle=endAngle;});
+overviewHTML+='</svg></div><div style="display:flex;justify-content:center;gap:20px">';
+pieData.forEach(function(d){overviewHTML+='<div class="legend-item"><div class="legend-dot" style="background:'+d.c+'"></div>'+d.n+' ('+d.v+')</div>';});
+overviewHTML+='</div></div></div>';
+document.getElementById('tab-overview').innerHTML=overviewHTML;
+
+var revenue=[18.5,24.5,29,31,35,38.5];var maxRev=40;
+var pipeline=[{n:'New Leads',v:47,c:'#3B82F6'},{n:'Qualified',v:28,c:'#D4A017'},{n:'Touring',v:15,c:'#10B981'},{n:'Negotiating',v:8,c:'#F59E0B'},{n:'Closing',v:5,c:'#EF4444'}];
+var salesHTML='<div class="grid11"><div class="card"><h3>Revenue Trend (SAR M)</h3><svg width="100%" height="240" viewBox="0 0 500 240" preserveAspectRatio="none"><defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D4A017" stop-opacity="0.3"/><stop offset="100%" stop-color="#D4A017" stop-opacity="0.05"/></linearGradient></defs>';
+var pts=[],polyPts=[];revenue.forEach(function(v,i){var x=i*90+40,y=220-(v/maxRev*200);pts.push(x+','+y);polyPts.push(x+','+y);});
+polyPts.push((revenue.length-1)*90+40+',220');polyPts.push('40,220');
+salesHTML+='<polygon points="'+polyPts.join(' ')+'" fill="url(#rg)"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="#D4A017" stroke-width="3"/>';
+revenue.forEach(function(v,i){var x=i*90+40,y=220-(v/maxRev*200);salesHTML+='<circle cx="'+x+'" cy="'+y+'" r="5" fill="#D4A017"/><text x="'+x+'" y="'+(y-12)+'" fill="#94A3B8" font-size="11" text-anchor="middle">'+v+'</text><text x="'+x+'" y="236" fill="#64748B" font-size="11" text-anchor="middle">'+salesData[i].m+'</text>';});
+salesHTML+='</svg></div><div class="card"><h3>Sales Pipeline</h3>';
+pipeline.forEach(function(p){salesHTML+='<div class="pipeline-item"><div class="row"><span class="name">'+p.n+'</span><span class="num" style="color:'+p.c+'">'+p.v+'</span></div><div class="track"><div class="fill" style="width:'+(p.v/47*100)+'%;background:'+p.c+'"></div></div></div>';});
+salesHTML+='</div></div>';
+document.getElementById('tab-sales').innerHTML=salesHTML;
+
+var agents=[{n:'Lead Qualifier',s:'Active',u:99.8,q:1247,t:'Critical'},{n:'Concierge Bot',s:'Active',u:99.5,q:3891,t:'Critical'},{n:'Pricing Engine',s:'Active',u:98.9,q:892,t:'Critical'},{n:'Follow-up Agent',s:'Active',u:99.2,q:2103,t:'High'},{n:'Virtual Staging',s:'Active',u:97.8,q:456,t:'High'},{n:'Market Analyzer',s:'Active',u:99.1,q:789,t:'High'},{n:'Content Writer',s:'Active',u:98.5,q:334,t:'Medium'},{n:'Social Manager',s:'Active',u:97.2,q:567,t:'Medium'},{n:'Email Composer',s:'Active',u:99.0,q:1023,t:'Medium'},{n:'Report Generator',s:'Active',u:98.7,q:198,t:'Low'},{n:'SEO Optimizer',s:'Active',u:98.3,q:445,t:'Medium'},{n:'Ad Campaign Mgr',s:'Active',u:99.1,q:678,t:'High'},{n:'Translation Bot',s:'Active',u:99.4,q:1567,t:'Medium'},{n:'Doc Generator',s:'Active',u:97.9,q:289,t:'Low'},{n:'Analytics Engine',s:'Active',u:99.6,q:912,t:'Low'},{n:'Health Monitor',s:'Active',u:99.9,q:2045,t:'Critical'}];
+var agentsHTML='<div class="card"><h3>AI Agent Fleet Status — 16/16 Online</h3><div class="agent-grid">';
+agents.forEach(function(a){agentsHTML+='<div class="agent"><div><div style="font-size:13px;font-weight:bold;color:#F1F5F9">'+a.n+'</div><div style="font-size:11px;color:#64748B">'+a.t+' · '+a.q.toLocaleString()+' queries</div></div><div style="text-align:right"><div style="font-size:12px;color:#10B981;font-weight:bold">● '+a.s+'</div><div style="font-size:11px;color:#94A3B8">'+a.u+'% uptime</div></div></div>';});
+agentsHTML+='</div></div>';
+document.getElementById('tab-agents').innerHTML=agentsHTML;
+
+var mktData=[{w:'W1',imp:45,cl:2250,ld:68},{w:'W2',imp:52,cl:2860,ld:82},{w:'W3',imp:61,cl:3355,ld:95},{w:'W4',imp:58,cl:3190,ld:88},{w:'W5',imp:67,cl:3685,ld:103},{w:'W6',imp:72,cl:3960,ld:112}];
+var maxImp=80;
+var mktHTML='<div class="grid11"><div class="card"><h3>Clicks & Leads Trend</h3><div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#D4A017"></div>Clicks</div><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Leads</div></div><svg width="100%" height="240" viewBox="0 0 500 240" preserveAspectRatio="none">';
+var clPts=[],ldPts=[];mktData.forEach(function(d,i){var x=i*85+45;clPts.push(x+','+(220-d.cl/4000*200));ldPts.push(x+','+(220-d.ld/120*200));});
+mktHTML+='<polyline points="'+clPts.join(' ')+'" fill="none" stroke="#D4A017" stroke-width="3"/><polyline points="'+ldPts.join(' ')+'" fill="none" stroke="#10B981" stroke-width="3"/>';
+mktData.forEach(function(d,i){var x=i*85+45;mktHTML+='<circle cx="'+x+'" cy="'+(220-d.cl/4000*200)+'" r="4" fill="#D4A017"/><circle cx="'+x+'" cy="'+(220-d.ld/120*200)+'" r="4" fill="#10B981"/><text x="'+x+'" y="236" fill="#64748B" font-size="11" text-anchor="middle">'+d.w+'</text>';});
+mktHTML+='</svg></div><div class="card"><h3>Weekly Impressions (K)</h3><div class="bar-chart">';
+mktData.forEach(function(d){var h=d.imp/maxImp*180;mktHTML+='<div class="bar-group"><div style="text-align:center;font-size:11px;color:#94A3B8;margin-bottom:4px">'+d.imp+'K</div><div class="bar-pair"><div class="bar" style="height:'+h+'px;background:#3B82F6;width:36px"></div></div><div class="bar-label">'+d.w+'</div></div>';});
+mktHTML+='</div></div></div>';
+document.getElementById('tab-marketing').innerHTML=mktHTML;
+</script>
+</body>
+</html>
