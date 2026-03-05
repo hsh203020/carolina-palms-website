@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carolina Palms - AI Growth Engine</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='4' fill='%230D1B2A' stroke='%23D4A017' stroke-width='3'/><text x='20' y='28' text-anchor='middle' fill='%23D4A017' font-size='18' font-weight='bold' font-family='Georgia'>CP</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0D1B2A;color:#F1F5F9;min-height:100vh}
+.hdr{padding:16px 24px;border-bottom:1px solid #D4A017;display:flex;justify-content:space-between;align-items:center}
+.logo{width:40px;height:40px;border:2px solid #D4A017;display:flex;align-items:center;justify-content:center;color:#D4A017;font-weight:bold;font-size:14px;text-decoration:none}
+.tabs{padding:16px 24px;display:flex;gap:8px;flex-wrap:wrap}
+.tab{padding:8px 20px;border-radius:8px;border:none;cursor:pointer;font-size:14px;background:#1E293B;color:#94A3B8}
+.tab.active{background:#8B5CF6;color:white;font-weight:bold}
+.tab:hover:not(.active){background:#2D3B4E}
+.content{padding:0 24px 24px;max-width:1400px;margin:0 auto}
+.card{background:#111827;border:1px solid #1E293B;border-radius:12px;padding:24px;margin-bottom:16px}
+.card h3{color:#D4A017;margin-bottom:12px;font-size:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.metric{background:#111827;border:1px solid #1E293B;border-radius:12px;padding:20px;text-align:center}
+.metric .num{font-size:28px;font-weight:bold;margin:8px 0}
+.metric .lbl{font-size:12px;color:#94A3B8}
+.bar-h{height:10px;background:#1E293B;border-radius:5px;margin:8px 0}
+.bar-h-fill{height:100%;border-radius:5px;transition:width .5s}
+.lead-row{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#0D1B2A;border-radius:8px;margin-bottom:8px}
+.badge{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold}
+.staging-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.staging-card{background:#0D1B2A;border:1px solid #1E293B;border-radius:8px;overflow:hidden}
+.staging-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:32px}
+.staging-info{padding:10px}
+.hidden{display:none}
+.back{color:#94A3B8;text-decoration:none;font-size:13px}
+.back:hover{color:#D4A017}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:16px">
+    <a href="/" class="logo">CP</a>
+    <div>
+      <h1 style="font-size:20px;font-weight:bold;color:#8B5CF6">AI Growth Engine</h1>
+      <p style="font-size:12px;color:#64748B"><a href="/" class="back">← Back</a> · Carolina Palms · Intelligent Growth Systems</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block"></span>
+    <span style="font-size:12px;color:#10B981">3 AI Systems Active</span>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab active" data-tab="staging">Virtual Staging</button>
+  <button class="tab" data-tab="pricing">Dynamic Pricing</button>
+  <button class="tab" data-tab="leads">Predictive Lead Scoring</button>
+</div>
+<div class="content">
+  <div id="sec-staging"></div>
+  <div id="sec-pricing" class="hidden"></div>
+  <div id="sec-leads" class="hidden"></div>
+</div>
+<script>
+var tabBtns=document.querySelectorAll('.tab');
+var sections=['staging','pricing','leads'];
+tabBtns.forEach(function(btn){btn.addEventListener('click',function(){tabBtns.forEach(function(b){b.classList.remove('active');});btn.classList.add('active');sections.forEach(function(s){document.getElementById('sec-'+s).classList.add('hidden');});document.getElementById('sec-'+btn.dataset.tab).classList.remove('hidden');});});
+
+document.getElementById('sec-staging').innerHTML='<div class="grid3"><div class="metric"><div style="font-size:24px">🏠</div><div class="num" style="color:#8B5CF6">87%</div><div class="lbl">More Views with Staging</div></div><div class="metric"><div style="font-size:24px">⏱️</div><div class="num" style="color:#10B981">2.3s</div><div class="lbl">Avg Generation Time</div></div><div class="metric"><div style="font-size:24px">🎯</div><div class="num" style="color:#D4A017">342</div><div class="lbl">Scenes Generated This Month</div></div></div><div class="card"><h3>Recent Virtual Stagings</h3><div class="staging-grid"><div class="staging-card"><div class="staging-img" style="background:linear-gradient(135deg,#1B3050,#2D4A6F)">🛋️</div><div class="staging-info"><div style="font-size:13px;font-weight:bold">Ashley - Living Room</div><div style="font-size:11px;color:#94A3B8">Modern Luxury · 4 variants</div><div style="margin-top:6px"><span class="badge" style="background:#10B98133;color:#10B981">+92% engagement</span></div></div></div><div class="staging-card"><div class="staging-img" style="background:linear-gradient(135deg,#1E293B,#334155)">🍳</div><div class="staging-info"><div style="font-size:13px;font-weight:bold">Rivertowne - Kitchen</div><div style="font-size:11px;color:#94A3B8">Contemporary · 3 variants</div><div style="margin-top:6px"><span class="badge" style="background:#8B5CF633;color:#8B5CF6">+78% engagement</span></div></div></div><div class="staging-card"><div class="staging-img" style="background:linear-gradient(135deg,#0D1B2A,#1B3050)">🛏️</div><div class="staging-info"><div style="font-size:13px;font-weight:bold">Ashley - Master Suite</div><div style="font-size:11px;color:#94A3B8">Royal Arabian · 5 variants</div><div style="margin-top:6px"><span class="badge" style="background:#D4A01733;color:#D4A017">+95% engagement</span></div></div></div></div></div><div class="grid2"><div class="card"><h3>Style Performance</h3><div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#94A3B8">Modern Luxury</span><span style="color:#8B5CF6">94%</span></div><div class="bar-h"><div class="bar-h-fill" style="width:94%;background:#8B5CF6"></div></div></div><div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#94A3B8">Royal Arabian</span><span style="color:#D4A017">89%</span></div><div class="bar-h"><div class="bar-h-fill" style="width:89%;background:#D4A017"></div></div></div><div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#94A3B8">Contemporary</span><span style="color:#10B981">82%</span></div><div class="bar-h"><div class="bar-h-fill" style="width:82%;background:#10B981"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#94A3B8">Minimalist</span><span style="color:#3B82F6">71%</span></div><div class="bar-h"><div class="bar-h-fill" style="width:71%;background:#3B82F6"></div></div></div></div><div class="card"><h3>Room Type Demand</h3><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><div style="flex:1;min-width:100px;text-align:center;padding:16px;background:#0D1B2A;border-radius:8px"><div style="font-size:20px">🛋️</div><div style="font-size:13px;color:#F1F5F9;margin-top:4px">Living</div><div style="font-size:18px;font-weight:bold;color:#8B5CF6">38%</div></div><div style="flex:1;min-width:100px;text-align:center;padding:16px;background:#0D1B2A;border-radius:8px"><div style="font-size:20px">🛏️</div><div style="font-size:13px;color:#F1F5F9;margin-top:4px">Master</div><div style="font-size:18px;font-weight:bold;color:#D4A017">28%</div></div><div style="flex:1;min-width:100px;text-align:center;padding:16px;background:#0D1B2A;border-radius:8px"><div style="font-size:20px">🍳</div><div style="font-size:13px;color:#F1F5F9;margin-top:4px">Kitchen</div><div style="font-size:18px;font-weight:bold;color:#10B981">22%</div></div><div style="flex:1;min-width:100px;text-align:center;padding:16px;background:#0D1B2A;border-radius:8px"><div style="font-size:20px">🌿</div><div style="font-size:13px;color:#F1F5F9;margin-top:4px">Garden</div><div style="font-size:18px;font-weight:bold;color:#F59E0B">12%</div></div></div></div></div>';
+
+document.getElementById('sec-pricing').innerHTML='<div class="grid3"><div class="metric"><div style="font-size:24px">📉</div><div class="num" style="color:#10B981">30%</div><div class="lbl">Fewer Pricing Errors</div></div><div class="metric"><div style="font-size:24px">💰</div><div class="num" style="color:#D4A017">SAR 2.8M</div><div class="lbl">Avg Recommended Price</div></div><div class="metric"><div style="font-size:24px">📊</div><div class="num" style="color:#8B5CF6">12</div><div class="lbl">Competitor Listings Tracked</div></div></div><div class="grid2"><div class="card"><h3>Price vs Market</h3><div style="margin-bottom:16px"><div style="font-size:13px;color:#F1F5F9;margin-bottom:4px">Ashley (276 m²)</div><div style="display:flex;gap:8px;align-items:center"><div style="flex:1"><div class="bar-h"><div class="bar-h-fill" style="width:85%;background:#D4A017"></div></div></div><span style="font-size:13px;color:#D4A017;min-width:80px">SAR 3.5M</span></div><div style="font-size:11px;color:#64748B;margin-top:2px">Market avg: SAR 3.8M · <span style="color:#10B981">8% below</span></div></div><div style="margin-bottom:16px"><div style="font-size:13px;color:#F1F5F9;margin-bottom:4px">Rivertowne (189 m²)</div><div style="display:flex;gap:8px;align-items:center"><div style="flex:1"><div class="bar-h"><div class="bar-h-fill" style="width:65%;background:#3B82F6"></div></div></div><span style="font-size:13px;color:#3B82F6;min-width:80px">SAR 2.5M</span></div><div style="font-size:11px;color:#64748B;margin-top:2px">Market avg: SAR 2.7M · <span style="color:#10B981">7% below</span></div></div></div><div class="card"><h3>Competitor Pricing (SAR/m²)</h3><div class="lead-row"><span style="font-size:13px;color:#F1F5F9">Al Narjis Compound</span><span style="font-size:13px;color:#EF4444">SAR 14,200/m²</span></div><div class="lead-row"><span style="font-size:13px;color:#F1F5F9">Ishbilia Gardens</span><span style="font-size:13px;color:#F59E0B">SAR 13,800/m²</span></div><div class="lead-row"><span style="font-size:13px;color:#F1F5F9">Al Malqa Villas</span><span style="font-size:13px;color:#F59E0B">SAR 13,500/m²</span></div><div class="lead-row" style="border:1px solid #D4A017"><span style="font-size:13px;color:#D4A017;font-weight:bold">Carolina Palms</span><span style="font-size:13px;color:#10B981;font-weight:bold">SAR 12,680/m²</span></div><div class="lead-row"><span style="font-size:13px;color:#F1F5F9">Al Yasmin Towers</span><span style="font-size:13px;color:#94A3B8">SAR 12,100/m²</span></div></div></div>';
+
+document.getElementById('sec-leads').innerHTML='<div class="grid3"><div class="metric"><div style="font-size:24px">🎯</div><div class="num" style="color:#10B981">20-30%</div><div class="lbl">More Conversions</div></div><div class="metric"><div style="font-size:24px">⚡</div><div class="num" style="color:#D4A017">103</div><div class="lbl">Active Scored Leads</div></div><div class="metric"><div style="font-size:24px">🤖</div><div class="num" style="color:#8B5CF6">10</div><div class="lbl">Behavioral Signals</div></div></div><div class="grid2"><div class="card"><h3>Lead Score Distribution</h3><div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>🔥 HOT (80-100)</span><span style="color:#EF4444;font-weight:bold">18 leads</span></div><div class="bar-h"><div class="bar-h-fill" style="width:17%;background:#EF4444"></div></div></div><div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>🟡 WARM (50-79)</span><span style="color:#F59E0B;font-weight:bold">35 leads</span></div><div class="bar-h"><div class="bar-h-fill" style="width:34%;background:#F59E0B"></div></div></div><div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>🟥 COOL (20-49)</span><span style="color:#3B82F6;font-weight:bold">32 leads</span></div><div class="bar-h"><div class="bar-h-fill" style="width:31%;background:#3B82F6"></div></div></div><div><div style="display:flex;justify-content:space-between;font-size:13px"><span>⚪ COLD (0-19)</span><span style="color:#64748B;font-weight:bold">18 leads</span></div><div class="bar-h"><div class="bar-h-fill" style="width:17%;background:#64748B"></div></div></div></div><div class="card"><h3>Top Scored Leads</h3><div class="lead-row"><div><div style="font-size:13px;font-weight:bold;color:#F1F5F9">Ahmed Al-Rashid</div><div style="font-size:11px;color:#64748B">Ashley · SAR 3.5M budget</div></div><span class="badge" style="background:#EF444433;color:#EF4444">Score: 94</span></div><div class="lead-row"><div><div style="font-size:13px;font-weight:bold;color:#F1F5F9">Sarah Mitchell</div><div style="font-size:11px;color:#64748B">Ashley · DQ Expat</div></div><span class="badge" style="background:#EF444433;color:#EF4444">Score: 91</span></div><div class="lead-row"><div><div style="font-size:13px;font-weight:bold;color:#F1F5F9">Mohammed Hassan</div><div style="font-size:11px;color:#64748B">Rivertowne · Investor</div></div><span class="badge" style="background:#F59E0B33;color:#F59E0B">Score: 78</span></div><div class="lead-row"><div><div style="font-size:13px;font-weight:bold;color:#F1F5F9">Fatima Al-Dosari</div><div style="font-size:11px;color:#64748B">Rivertowne · Family</div></div><span class="badge" style="background:#F59E0B33;color:#F59E0B">Score: 72</span></div><div class="lead-row"><div><div style="font-size:13px;font-weight:bold;color:#F1F5F9">James Cooper</div><div style="font-size:11px;color:#64748B">Ashley · Embassy staff</div></div><span class="badge" style="background:#F59E0B33;color:#F59E0B">Score: 68</span></div></div></div>';
+</script>
+</body>
+</html>
