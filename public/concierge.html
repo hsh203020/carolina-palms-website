@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carolina Palms - Premium Concierge</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='4' fill='%230D1B2A' stroke='%23D4A017' stroke-width='3'/><text x='20' y='28' text-anchor='middle' fill='%23D4A017' font-size='18' font-weight='bold' font-family='Georgia'>CP</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0D1B2A;color:#F1F5F9;min-height:100vh;display:flex;flex-direction:column}
+.chat-container{max-width:800px;margin:0 auto;width:100%;flex:1;display:flex;flex-direction:column;height:100vh}
+.chat-header{padding:16px 24px;border-bottom:1px solid #D4A017;display:flex;justify-content:space-between;align-items:center;background:#0D1B2A}
+.chat-header .left{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border:2px solid #D4A017;display:flex;align-items:center;justify-content:center;color:#D4A017;font-weight:bold;font-size:16px;border-radius:8px;text-decoration:none}
+.lang-toggle{padding:6px 14px;border-radius:6px;border:1px solid #D4A017;background:transparent;color:#D4A017;cursor:pointer;font-size:13px}
+.lang-toggle:hover{background:#D4A01722}
+.chat-body{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+.msg{max-width:80%;padding:14px 18px;border-radius:16px;font-size:14px;line-height:1.6}
+.msg.bot{align-self:flex-start;background:#111827;border:1px solid #1E293B;border-bottom-left-radius:4px}
+.msg.user{align-self:flex-end;background:#D4A017;color:#0D1B2A;border-bottom-right-radius:4px}
+.msg .name{font-size:11px;color:#D4A017;margin-bottom:4px;font-weight:bold}
+.quick-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.qa-btn{padding:6px 14px;border-radius:20px;border:1px solid #1E293B;background:#0D1B2A;color:#94A3B8;cursor:pointer;font-size:12px;transition:all .2s}
+.qa-btn:hover{border-color:#D4A017;color:#D4A017}
+.chat-input{padding:16px 24px;border-top:1px solid #1E293B;background:#0D1B2A;display:flex;gap:12px}
+.chat-input input{flex:1;padding:12px 18px;border-radius:12px;border:1px solid #1E293B;background:#111827;color:#F1F5F9;font-size:14px;outline:none}
+.chat-input input:focus{border-color:#D4A017}
+.chat-input button{padding:12px 24px;border-radius:12px;border:none;background:#D4A017;color:#0D1B2A;font-weight:bold;cursor:pointer;font-size:14px}
+.chat-input button:hover{background:#C4901A}
+.villa-card{background:#0D1B2A;border:1px solid #1E293B;border-radius:12px;padding:16px;margin-top:12px}
+.villa-card h4{color:#D4A017;margin-bottom:6px;font-size:15px}
+.villa-card .specs{font-size:12px;color:#94A3B8;margin-bottom:8px}
+.villa-card .price{font-size:18px;font-weight:bold;color:#10B981}
+.typing{display:flex;gap:4px;padding:8px 14px}
+.typing span{width:8px;height:8px;border-radius:50%;background:#D4A017;animation:bounce 1.4s infinite ease-in-out both}
+.typing span:nth-child(1){animation-delay:-.32s}
+.typing span:nth-child(2){animation-delay:-.16s}
+@keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+.inventory-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:bold}
+.feat-list{margin-top:8px;font-size:13px;color:#94A3B8}
+.feat-list div{padding:4px 0;border-bottom:1px solid rgba(30,41,59,0.3)}
+.back{color:#94A3B8;text-decoration:none;font-size:11px}
+.back:hover{color:#D4A017}
+</style>
+</head>
+<body>
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="left">
+      <a href="/" class="logo">CP</a>
+      <div>
+        <div style="font-size:16px;font-weight:bold;color:#D4A017">Premium Concierge</div>
+        <div style="font-size:11px;color:#64748B"><a href="/" class="back">← Home</a> · AI-Powered · Bilingual AR/EN · Live Inventory</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block"></span>
+      <span style="font-size:12px;color:#10B981">Online</span>
+      <button class="lang-toggle" id="langBtn">عربي / EN</button>
+    </div>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="msg bot">
+      <div class="name">Carolina Palms Concierge</div>
+      Welcome to Carolina Palms, the most distinguished gated residential estate in central Riyadh. I'm your personal concierge, here to help you discover your perfect home.<br><br>How may I assist you today?
+      <div class="quick-actions">
+        <button class="qa-btn" data-msg="Tell me about the villas">🏠 Villa Types</button>
+        <button class="qa-btn" data-msg="What are the prices?">💰 Pricing</button>
+        <button class="qa-btn" data-msg="What amenities are available?">✨ Amenities</button>
+        <button class="qa-btn" data-msg="I'd like to book a viewing">📅 Book Viewing</button>
+        <button class="qa-btn" data-msg="Is financing available?">🏦 Financing</button>
+      </div>
+    </div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type your message... (EN or عربي)" />
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
+<script>
+var isArabic=false;
+var chatBody=document.getElementById('chatBody');
+var chatInput=document.getElementById('chatInput');
+
+var responses={
+  'villa':'<div class="name">Carolina Palms Concierge</div>We offer two exquisite villa collections:<div class="villa-card"><h4>The Ashley \u2014 4 Bedrooms</h4><div class="specs">276 m\u00b2 BUA \u00b7 Premium finishes \u00b7 Private garden \u00b7 Driver room</div><div class="price">SAR 3,500,000</div><div class="inventory-badge" style="background:#10B98133;color:#10B981;margin-top:6px">22 Available</div></div><div class="villa-card"><h4>The Rivertowne \u2014 3 Bedrooms</h4><div class="specs">189 m\u00b2 BUA \u00b7 Modern design \u00b7 Maid room \u00b7 Covered parking</div><div class="price">SAR 2,500,000</div><div class="inventory-badge" style="background:#10B98133;color:#10B981;margin-top:6px">38 Available</div></div>Both villa types are fully finished and ready for immediate occupancy.<div class="quick-actions" style="margin-top:12px"><button class="qa-btn" data-msg="What are the prices?">\ud83d\udcb0 See Pricing</button><button class="qa-btn" data-msg="I\'d like to book a viewing">\ud83d\udcc5 Book Viewing</button></div>',
+  'price':'<div class="name">Carolina Palms Concierge</div>Our pricing structure:<div class="feat-list"><div><strong style="color:#D4A017">The Ashley (4BR, 276m\u00b2)</strong> \u2014 SAR 3,500,000</div><div><strong style="color:#D4A017">The Rivertowne (3BR, 189m\u00b2)</strong> \u2014 SAR 2,500,000</div><div><strong style="color:#F59E0B">Corner Unit Premium</strong> \u2014 +10-15%</div><div><strong style="color:#10B981">Early Booking Discount</strong> \u2014 5% off (first 20 buyers)</div><div><strong style="color:#10B981">Bulk Purchase (5+)</strong> \u2014 8% off</div></div><br>Payment plans available up to 10 years. Would you like to discuss financing options?<div class="quick-actions" style="margin-top:12px"><button class="qa-btn" data-msg="Is financing available?">\ud83c\udfe6 Financing</button><button class="qa-btn" data-msg="I\'d like to book a viewing">\ud83d\udcc5 Book Viewing</button></div>',
+  'amenity':'<div class="name">Carolina Palms Concierge</div>Carolina Palms features world-class amenities:<div class="feat-list"><div>\ud83c\udfca Swimming pools (adult & children)</div><div>\ud83c\udfcb\ufe0f Fully-equipped fitness center & spa</div><div>\ud83d\udc76 On-site kindergarten (only compound in central Riyadh!)</div><div>\ud83c\udf7d\ufe0f Restaurant & caf\u00e9</div><div>\ud83d\uded2 Grocery store</div><div>\ud83c\udf33 Landscaped gardens & walking paths</div><div>\ud83d\udd12 24/7 security with gated entry</div><div>\ud83c\udd7f\ufe0f Visitor parking</div><div>\ud83c\udfe5 Near King Faisal Hospital (5 min)</div></div><div class="quick-actions" style="margin-top:12px"><button class="qa-btn" data-msg="Tell me about the villas">\ud83c\udfe0 Villa Types</button><button class="qa-btn" data-msg="I\'d like to book a viewing">\ud83d\udcc5 Book Viewing</button></div>',
+  'book':'<div class="name">Carolina Palms Concierge</div>Wonderful! I would be delighted to arrange a private viewing for you.<br><br>\ud83d\udccd <strong>Location:</strong> Al Ma\'dhar, King Khalid Road, Riyadh<br>\u23f0 <strong>Available:</strong> Saturday-Thursday, 10AM-6PM<br>\ud83d\udcde <strong>Direct Line:</strong> +1 313 741 0096<br>\ud83d\udce7 <strong>Email:</strong> admin@vpmgloballlc.com<br><br>To schedule your visit, I just need:<br>\u2022 Your preferred date and time<br>\u2022 Number of guests<br>\u2022 Villa type of interest (Ashley or Rivertowne)<br><br>Shall I proceed with booking?',
+  'financ':'<div class="name">Carolina Palms Concierge</div>Excellent question. We offer flexible financing options:<div class="feat-list"><div>\ud83c\udfe6 <strong>Bank Financing:</strong> Al Rajhi, SNB, Alinma banks</div><div>\ud83d\udcb3 <strong>Down Payment:</strong> 10-15%</div><div>\ud83d\udcc5 <strong>Bank Terms:</strong> Up to 25 years</div><div>\ud83e\udd1d <strong>Developer Plans:</strong> Up to 10 years direct</div><div>\ud83d\udcca <strong>Est. Rental Yield:</strong> 6.7-7.1% annually</div></div><br>Our financial advisor can prepare a personalized payment plan. Would you like me to connect you?<div class="quick-actions" style="margin-top:12px"><button class="qa-btn" data-msg="I\'d like to book a viewing">\ud83d\udcc5 Book Viewing</button></div>',
+  'location':'<div class="name">Carolina Palms Concierge</div>Carolina Palms enjoys a prime location in the heart of Riyadh:<div class="feat-list"><div>\ud83d\udccd Al Ma\'dhar District, King Khalid Road</div><div>\ud83c\udfe5 5 min to King Faisal Specialist Hospital</div><div>\ud83d\udee3\ufe0f Direct access to King Fahd Road</div><div>\ud83c\udfeb 10 min to International Schools</div><div>\ud83d\uded2 15 min to Riyadh Gallery Mall</div><div>\u2708\ufe0f 25 min to King Khalid International Airport</div></div><div class="quick-actions" style="margin-top:12px"><button class="qa-btn" data-msg="I\'d like to book a viewing">\ud83d\udcc5 Book Viewing</button></div>',
+  'default':'<div class="name">Carolina Palms Concierge</div>Thank you for your interest in Carolina Palms. We are a gated residential estate of 79 luxury villas in Al Ma\'dhar, central Riyadh.<br><br>Our villas are fully finished and ready for immediate occupancy, starting from SAR 2,500,000.<br><br>How can I help you further?<div class="quick-actions" style="margin-top:12px"><button class="qa-btn" data-msg="Tell me about the villas">\ud83c\udfe0 Villas</button><button class="qa-btn" data-msg="What are the prices?">\ud83d\udcb0 Pricing</button><button class="qa-btn" data-msg="What amenities are available?">\u2728 Amenities</button></div>'
+};
+
+var arabicResponses={
+  'villa':'<div class="name">\u0643\u0648\u0646\u0633\u064a\u0631\u062c \u0643\u0627\u0631\u0648\u0644\u064a\u0646\u0627 \u0628\u0627\u0644\u0645\u0632</div>\u0646\u0642\u062f\u0645 \u0645\u062c\u0645\u0648\u0639\u062a\u064a\u0646 \u0645\u0646 \u0627\u0644\u0641\u0644\u0644 \u0627\u0644\u0641\u0627\u062e\u0631\u0629:<div class="villa-card"><h4>\u0630\u0627 \u0622\u0634\u0644\u064a \u2014 \u0664 \u063a\u0631\u0641 \u0646\u0648\u0645</h4><div class="specs">\u0662\u0667\u0666 \u0645\u00b2 \u00b7 \u062a\u0634\u0637\u064a\u0628 \u0641\u0627\u062e\u0631 \u00b7 \u062d\u062f\u064a\u0642\u0629 \u062e\u0627\u0635\u0629 \u00b7 \u063a\u0631\u0641\u0629 \u0633\u0627\u0626\u0642</div><div class="price">\u0663\u066c\u0665\u0660\u0660\u066c\u0660\u0660\u0660 \u0631.\u0633</div><div class="inventory-badge" style="background:#10B98133;color:#10B981;margin-top:6px">\u0662\u0662 \u0645\u062a\u0648\u0641\u0631\u0629</div></div><div class="villa-card"><h4>\u0630\u0627 \u0631\u064a\u0641\u0631\u062a\u0627\u0648\u0646 \u2014 \u0663 \u063a\u0631\u0641 \u0646\u0648\u0645</h4><div class="specs">\u0661\u0668\u0669 \u0645\u00b2 \u00b7 \u062a\u0635\u0645\u064a\u0645 \u0639\u0635\u0631\u064a \u00b7 \u063a\u0631\u0641\u0629 \u062e\u0627\u062f\u0645\u0629 \u00b7 \u0645\u0648\u0642\u0641 \u0645\u063a\u0637\u0649</div><div class="price">\u0662\u066c\u0665\u0660\u0660\u066c\u0660\u0660\u0660 \u0631.\u0633</div><div class="inventory-badge" style="background:#10B98133;color:#10B981;margin-top:6px">\u0663\u0668 \u0645\u062a\u0648\u0641\u0631\u0629</div></div>\u062c\u0645\u064a\u0639 \u0627\u0644\u0641\u0644\u0644 \u062c\u0627\u0647\u0632\u0629 \u0644\u0644\u0633\u0643\u0646 \u0627\u0644\u0641\u0648\u0631\u064a \u0628\u062a\u0634\u0637\u064a\u0628 \u0643\u0627\u0645\u0644.',
+  'price':'<div class="name">\u0643\u0648\u0646\u0633\u064a\u0631\u062c \u0643\u0627\u0631\u0648\u0644\u064a\u0646\u0627 \u0628\u0627\u0644\u0645\u0632</div>\u0647\u064a\u0643\u0644 \u0627\u0644\u0623\u0633\u0639\u0627\u0631:<div class="feat-list"><div><strong style="color:#D4A017">\u0630\u0627 \u0622\u0634\u0644\u064a (\u0664 \u063a\u0631\u0641\u060c \u0662\u0667\u0666\u0645\u00b2)</strong> \u2014 \u0663\u066c\u0665\u0660\u0660\u066c\u0660\u0660\u0660 \u0631.\u0633</div><div><strong style="color:#D4A017">\u0630\u0627 \u0631\u064a\u0641\u0631\u062a\u0627\u0648\u0646 (\u0663 \u063a\u0631\u0641\u060c \u0661\u0668\u0669\u0645\u00b2)</strong> \u2014 \u0662\u066c\u0665\u0660\u0660\u066c\u0660\u0660\u0660 \u0631.\u0633</div><div><strong style="color:#F59E0B">\u0639\u0644\u0627\u0648\u0629 \u0627\u0644\u0648\u062d\u062f\u0627\u062a \u0627\u0644\u0631\u0643\u0646\u064a\u0629</strong> \u2014 +\u0661\u0660-\u0661\u0665%</div><div><strong style="color:#10B981">\u062e\u0635\u0645 \u0627\u0644\u062d\u062c\u0632 \u0627\u0644\u0645\u0628\u0643\u0631</strong> \u2014 \u0665% (\u0623\u0648\u0644 \u0662\u0660 \u0645\u0634\u062a\u0631\u064a)</div></div><br>\u062e\u0637\u0637 \u0633\u062f\u0627\u062f \u062a\u0635\u0644 \u0625\u0644\u0649 \u0661\u0660 \u0633\u0646\u0648\u0627\u062a.',
+  'default':'<div class="name">\u0643\u0648\u0646\u0633\u064a\u0631\u062c \u0643\u0627\u0631\u0648\u0644\u064a\u0646\u0627 \u0628\u0627\u0644\u0645\u0632</div>\u0645\u0631\u062d\u0628\u0627\u064b \u0628\u0643\u0645 \u0641\u064a \u0643\u0627\u0631\u0648\u0644\u064a\u0646\u0627 \u0628\u0627\u0644\u0645\u0632. \u0645\u062c\u0645\u0639 \u0633\u0643\u0646\u064a \u0641\u0627\u062e\u0631 \u0645\u0646 \u0667\u0669 \u0641\u064a\u0644\u0627 \u0641\u064a \u0627\u0644\u0645\u0639\u0630\u0631\u060c \u0648\u0633\u0637 \u0627\u0644\u0631\u064a\u0627\u0636.<br><br>\u0641\u0644\u0644\u0646\u0627 \u062c\u0627\u0647\u0632\u0629 \u0644\u0644\u0633\u0643\u0646 \u0627\u0644\u0641\u0648\u0631\u064a\u060c \u062a\u0628\u062f\u0623 \u0645\u0646 \u0662\u066c\u0665\u0660\u0660\u066c\u0660\u0660\u0660 \u0631.\u0633.<br><br>\u0643\u064a\u0641 \u064a\u0645\u0643\u0646\u0646\u064a \u0645\u0633\u0627\u0639\u062f\u062a\u0643\u0645\u061f'
+};
+
+function addMessage(text,isUser){var div=document.createElement('div');div.className='msg '+(isUser?'user':'bot');div.innerHTML=text;chatBody.appendChild(div);chatBody.scrollTop=chatBody.scrollHeight;bindQuickActions();}
+function showTyping(){var div=document.createElement('div');div.className='msg bot';div.id='typing';div.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';chatBody.appendChild(div);chatBody.scrollTop=chatBody.scrollHeight;}
+function removeTyping(){var el=document.getElementById('typing');if(el)el.remove();}
+function getResponse(msg){
+  var lower=msg.toLowerCase();
+  if(isArabic){
+    if(lower.match(/\u0641\u064a\u0644\u0627|\u0646\u0648\u0639|\u063a\u0631\u0641|\u0622\u0634\u0644\u064a|\u0631\u064a\u0641\u0631\u062a\u0627\u0648\u0646/))return arabicResponses.villa;
+    if(lower.match(/\u0633\u0639\u0631|\u0643\u0645|\u0631\u064a\u0627\u0644|\u062a\u0643\u0644\u0641\u0629/))return arabicResponses.price;
+    return arabicResponses['default'];
+  }
+  if(lower.match(/villa|type|bedroom|house|home|ashley|rivertowne/))return responses.villa;
+  if(lower.match(/price|cost|how much|sar|pricing/))return responses.price;
+  if(lower.match(/amenity|amenities|pool|gym|school|kindergarten|facilities/))return responses.amenity;
+  if(lower.match(/book|view|visit|tour|appointment|schedule/))return responses.book;
+  if(lower.match(/financ|loan|bank|payment|mortgage|installment/))return responses.financ;
+  if(lower.match(/location|where|map|address|direction|near/))return responses.location;
+  return responses['default'];
+}
+function sendMessage(){var text=chatInput.value.trim();if(!text)return;addMessage(text,true);chatInput.value='';showTyping();setTimeout(function(){removeTyping();addMessage(getResponse(text),false);},1200);}
+function bindQuickActions(){document.querySelectorAll('.qa-btn').forEach(function(btn){btn.onclick=function(){chatInput.value=btn.dataset.msg;sendMessage();};});}
+chatInput.addEventListener('keydown',function(e){if(e.key==='Enter')sendMessage();});
+document.getElementById('sendBtn').addEventListener('click',sendMessage);
+bindQuickActions();
+document.getElementById('langBtn').addEventListener('click',function(){
+  isArabic=!isArabic;
+  if(isArabic){chatInput.placeholder='\u0627\u0643\u062a\u0628 \u0631\u0633\u0627\u0644\u062a\u0643 \u0647\u0646\u0627...';addMessage('<div class="name">\u0643\u0648\u0646\u0633\u064a\u0631\u062c \u0643\u0627\u0631\u0648\u0644\u064a\u0646\u0627 \u0628\u0627\u0644\u0645\u0632</div>\u0645\u0631\u062d\u0628\u0627\u064b \u0628\u0643\u0645 \u0641\u064a \u0643\u0627\u0631\u0648\u0644\u064a\u0646\u0627 \u0628\u0627\u0644\u0645\u0632. \u0643\u064a\u0641 \u064a\u0645\u0643\u0646\u0646\u064a \u0645\u0633\u0627\u0639\u062f\u062a\u0643\u0645\u061f<div class="quick-actions"><button class="qa-btn" data-msg="\u0623\u0646\u0648\u0627\u0639 \u0627\u0644\u0641\u0644\u0644">\ud83c\udfe0 \u0627\u0644\u0641\u0644\u0644</button><button class="qa-btn" data-msg="\u0643\u0645 \u0633\u0639\u0631 \u0627\u0644\u0641\u064a\u0644\u0627\u061f">\ud83d\udcb0 \u0627\u0644\u0623\u0633\u0639\u0627\u0631</button><button class="qa-btn" data-msg="\u0623\u0631\u064a\u062f \u062d\u062c\u0632 \u0632\u064a\u0627\u0631\u0629">\ud83d\udcc5 \u062d\u062c\u0632</button></div>',false);}
+  else{chatInput.placeholder='Type your message... (EN or \u0639\u0631\u0628\u064a)';addMessage('<div class="name">Carolina Palms Concierge</div>Switched to English. How can I help you?<div class="quick-actions"><button class="qa-btn" data-msg="Tell me about the villas">\ud83c\udfe0 Villas</button><button class="qa-btn" data-msg="What are the prices?">\ud83d\udcb0 Pricing</button></div>',false);}
+});
+</script>
+</body>
+</html>
